@@ -5,6 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { routes } from './app.routes';
 import { WeatherEffects, weatherReducer } from '@features/weather/state';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,6 +13,6 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       StoreModule.forRoot({ weather: weatherReducer }),
       EffectsModule.forRoot([WeatherEffects])
-    )
+    ), provideAnimationsAsync()
   ]
 };
