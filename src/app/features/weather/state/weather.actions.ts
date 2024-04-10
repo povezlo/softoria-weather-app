@@ -11,5 +11,5 @@ export const loadWeatherSuccess = createAction(
 );
 export const loadWeatherFailure = createAction(
   '[Weather] Load Weather Failure',
-  props<{ error: any }>()
+  props<{ error: Error }>()
 );

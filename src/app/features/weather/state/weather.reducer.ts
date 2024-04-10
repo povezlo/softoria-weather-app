@@ -5,7 +5,7 @@ import { IWeather } from '@core/models';
 export interface WeatherState {
   weather: IWeather | null;
   loading: boolean;
-  error: any;
+  error: Error | null;
 }
 
 export const initialState: WeatherState = {
