@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as WeatherActions from './weather.actions';
-import { IWeather } from 'src/app/core/models';
+import { IWeather } from '@core/models';
 
 export interface WeatherState {
   weather: IWeather | null;

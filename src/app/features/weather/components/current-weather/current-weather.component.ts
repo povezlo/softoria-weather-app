@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { WeatherFacade } from 'src/app/features';
+import { WeatherFacade } from '@features/weather/state';
 
 @Component({
   selector: 'app-current-weather',

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import * as WeatherActions from './weather.actions';
 import { of } from 'rxjs';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import * as WeatherActions from './weather.actions';
 import { WeatherService } from '../services';
 
 @Injectable()

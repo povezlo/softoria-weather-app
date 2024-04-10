@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './weather.state';
 import * as WeatherActions from './weather.actions';
-import { selectWeather, selectLoading, selectError } from './weather.selectors';
+import { selectError, selectLoading, selectWeather } from './weather.selectors';
 
 @Injectable({ providedIn: 'root' })
 export class WeatherFacade {

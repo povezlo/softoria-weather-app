@@ -1,5 +1,5 @@
+import { IWeather } from '@core/models';
 import { createAction, props } from '@ngrx/store';
-import { IWeather } from 'src/app/core/models';
 
 export const loadWeather = createAction('[Weather] Load Weather', props<{ city: string }>());
 export const loadWeatherSuccess = createAction(
