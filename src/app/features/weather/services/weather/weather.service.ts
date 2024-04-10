@@ -3,17 +3,16 @@ import { Observable, of } from 'rxjs';
 import { IWeather } from '@core/models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WeatherService {
-
-  constructor() { }
+  constructor() {}
 
   getWeather(city: string): Observable<IWeather> {
     return of({
       city,
       country: '',
-      temperature: 0
+      temperature: 0,
     });
   }
 }

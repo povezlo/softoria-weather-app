@@ -7,33 +7,41 @@ $dark-primary: mat.define-palette(mat.$pink-palette);
 $dark-accent: mat.define-palette(mat.$blue-grey-palette);
 
 $custom-typography: mat.define-typography-config(
-  $font-family: "Inter Tight"
+  $font-family: 'Inter Tight',
 );
 
 // Light theme
-$light-theme: mat.define-light-theme((
-  color: (
-    primary: $light-primary,
-    accent: $light-accent,
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $light-primary,
+      accent: $light-accent,
+    ),
   )
-));
+);
 
 @include mat.all-component-themes($light-theme);
 @include mat.typography-hierarchy($custom-typography);
 
 // Dark theme
-.dark-theme {
-  $dark-theme: mat.define-dark-theme((
-    color: (
-      primary: $dark-primary,
-      accent: $dark-accent,
-    )
-  ));
-  @include mat.all-component-colors($dark-theme);
+@media (prefers-color-scheme: dark) {
+  .dark-theme {
+    $dark-theme: mat.define-dark-theme(
+      (
+        color: (
+          primary: $dark-primary,
+          accent: $dark-accent,
+        ),
+      )
+    );
+    @include mat.all-component-colors($dark-theme);
+  }
 }
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 body {
   margin: 0;
 }
-

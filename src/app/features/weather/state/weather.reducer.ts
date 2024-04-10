@@ -17,6 +17,14 @@ export const initialState: WeatherState = {
 export const weatherReducer = createReducer(
   initialState,
   on(WeatherActions.loadWeather, (state) => ({ ...state, loading: true })),
-  on(WeatherActions.loadWeatherSuccess, (state, { weather }) => ({ ...state, weather, loading: false })),
-  on(WeatherActions.loadWeatherFailure, (state, { error }) => ({ ...state, error, loading: false }))
+  on(WeatherActions.loadWeatherSuccess, (state, { weather }) => ({
+    ...state,
+    weather,
+    loading: false,
+  })),
+  on(WeatherActions.loadWeatherFailure, (state, { error }) => ({
+    ...state,
+    error,
+    loading: false,
+  }))
 );

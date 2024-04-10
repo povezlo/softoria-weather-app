@@ -7,7 +7,7 @@ import { WeatherFacade } from '@features/weather/state';
   imports: [],
   templateUrl: './current-weather.component.html',
   styleUrl: './current-weather.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CurrentWeatherComponent {
   weather$ = this.weatherFacade.weather$;

@@ -9,10 +9,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes), provideClientHydration(),
+    provideRouter(routes),
+    provideClientHydration(),
     importProvidersFrom(
       StoreModule.forRoot({ weather: weatherReducer }),
       EffectsModule.forRoot([WeatherEffects])
-    ), provideAnimationsAsync()
-  ]
+    ),
+    provideAnimationsAsync(),
+  ],
 };
