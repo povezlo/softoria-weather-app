@@ -1,0 +1,13 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+@Component({
+  selector: 'app-forecast',
+  standalone: true,
+  imports: [],
+  templateUrl: './forecast.component.html',
+  styleUrl: './forecast.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class ForecastComponent {
+
+}
