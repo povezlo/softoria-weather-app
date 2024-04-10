@@ -1,3 +1,5 @@
-export class WeatherState {
+import { WeatherState } from './weather.reducer';
 
+export interface AppState {
+  weather: WeatherState;
 }

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { WeatherFacade } from 'src/app/features';
 
 @Component({
   selector: 'app-current-weather',
@@ -9,5 +10,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CurrentWeatherComponent {
+  weather$ = this.weatherFacade.weather$;
+  loading$ = this.weatherFacade.loading$;
+  error$ = this.weatherFacade.error$;
 
+  constructor(private weatherFacade: WeatherFacade) {}
 }
