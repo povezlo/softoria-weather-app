@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { OverlayContainer } from '@angular/cdk/overlay';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
+import { ThemeService } from '@core/services';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatToolbarModule, MatIconModule],
+  imports: [MatToolbarModule, MatSlideToggleModule, MatIconModule],
   templateUrl: './header.component.html',
   styles: ['.spacer { flex: 1 1 auto; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -14,12 +15,14 @@ import { MatIconModule } from '@angular/material/icon';
 export class HeaderComponent {
   isDarkTheme = false;
 
-  constructor(private overlayContainer: OverlayContainer) {}
+  private themeService = inject(ThemeService);
+
+  ngOnInit() {
+    this.themeService.initializeTheme();
+  }
 
   toggleTheme() {
     this.isDarkTheme = !this.isDarkTheme;
-    this.overlayContainer
-      .getContainerElement()
-      .classList.toggle('dark-theme', this.isDarkTheme);
+    this.themeService.toggleTheme();
   }
 }

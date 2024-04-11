@@ -3,11 +3,7 @@
   <span class="spacer"></span>
   <a mat-button routerLink="/">Home</a>
   <a mat-button routerLink="/favorites">Favorites</a>
-  <button
-    mat-icon-button
-    (click)="toggleTheme()"
-    aria-label="Toggle Dark Theme"
-  >
-    <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
-  </button>
+  <div class="theme-toggle" (click)="toggleTheme()">
+    <mat-icon>{{ isDarkTheme ? 'wb_sunny' : 'nights_stay' }}</mat-icon>
+  </div>
 </mat-toolbar>
