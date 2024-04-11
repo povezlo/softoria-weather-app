@@ -24,18 +24,19 @@ $light-theme: mat.define-light-theme(
 @include mat.typography-hierarchy($custom-typography);
 
 // Dark theme
-@media (prefers-color-scheme: dark) {
-  .dark-theme {
-    $dark-theme: mat.define-dark-theme(
-      (
-        color: (
-          primary: $dark-primary,
+.dark-theme {
+  $dark-theme: mat.define-dark-theme((color: (primary: $dark-primary,
           accent: $dark-accent,
         ),
-      )
-    );
-    @include mat.all-component-colors($dark-theme);
-  }
+      ));
+  @include mat.all-component-colors($dark-theme);
+}
+
+:root {
+--container-width: 1300px;
+--container-padding-x: 15px;
+
+--header-hight: 4rem;
 }
 
 html,
@@ -44,4 +45,39 @@ body {
 }
 body {
   margin: 0;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+main {
+  min-height: calc(100vh - var(--header-hight));
+  padding-top: var(--header-hight);
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+}
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  flex-direction: column;
+  height: calc(100vh - var(--header-hight));
+  color: darkgrey;
 }

@@ -1,1 +1,13 @@
-<p>header works!</p>
+<mat-toolbar color="primary">
+  <span>Weather App</span>
+  <span class="spacer"></span>
+  <a mat-button routerLink="/">Home</a>
+  <a mat-button routerLink="/favorites">Favorites</a>
+  <button
+    mat-icon-button
+    (click)="toggleTheme()"
+    aria-label="Toggle Dark Theme"
+  >
+    <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
+</mat-toolbar>
