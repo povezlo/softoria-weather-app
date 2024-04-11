@@ -1,8 +1,17 @@
 <mat-toolbar color="primary">
   <span>Weather App</span>
   <span class="spacer"></span>
-  <a mat-button routerLink="/">Home</a>
-  <a mat-button routerLink="/favorites">Favorites</a>
+
+  <mat-nav-list>
+    <mat-list-item role="listitem">
+      <a mat-button routerLink="/" routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{exact: true}">Home</a>
+    </mat-list-item>
+    <mat-list-item  role="listitem">
+      <a mat-button routerLink="/favorites">Favorites</a>
+    </mat-list-item>
+  </mat-nav-list>
+
   <div class="theme-toggle" (click)="toggleTheme()">
     <mat-icon>{{ isDarkTheme ? 'wb_sunny' : 'nights_stay' }}</mat-icon>
   </div>

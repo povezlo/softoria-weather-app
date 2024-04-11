@@ -1,4 +1,10 @@
-import { Routes, provideRouter } from '@angular/router';
+import {
+  PreloadAllModules,
+  Routes,
+  provideRouter,
+  withPreloading,
+  withViewTransitions,
+} from '@angular/router';
 import { RoutePath } from '@core/models';
 
 export const routes: Routes = [
@@ -31,4 +37,10 @@ export const routes: Routes = [
   },
 ];
 
-export const appRoutingProviders = [provideRouter(routes)];
+export const appRoutingProviders = [
+  provideRouter(
+    routes,
+    withPreloading(PreloadAllModules),
+    withViewTransitions()
+  ),
+];
