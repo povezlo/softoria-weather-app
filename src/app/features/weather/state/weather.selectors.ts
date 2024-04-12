@@ -27,3 +27,8 @@ export const selectError = createSelector(
   selectWeatherState,
   (state) => state.error
 );
+
+export const selectShowLoader = createSelector(
+  selectWeatherState,
+  (state) => state.showLoader
+);

@@ -1,28 +1,35 @@
 import { Injectable } from '@angular/core';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import * as WeatherActions from './weather.actions';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
+import { AppState } from './weather.state';
+import * as WeatherActions from './weather.actions';
+import * as LoaderActions from './loader.actions';
 import { WeatherService } from '../services';
 
 @Injectable()
 export class WeatherEffects {
   constructor(
     private actions$: Actions,
-    private weatherService: WeatherService
+    private weatherService: WeatherService,
+    private store: Store<AppState>
   ) {}
 
   loadLocations$ = createEffect(() =>
     this.actions$.pipe(
       ofType(WeatherActions.loadLocations),
+      tap(() => this.store.dispatch(LoaderActions.showLoader())),
       mergeMap(({ query }) =>
         this.weatherService.getLocations(query).pipe(
-          map((locations) =>
-            WeatherActions.loadLocationsSuccess({ locations })
-          ),
-          catchError((error) =>
-            of(WeatherActions.loadLocationsFailure({ error }))
-          )
+          map((locations) => {
+            this.store.dispatch(LoaderActions.hideLoader());
+            return WeatherActions.loadLocationsSuccess({ locations });
+          }),
+          catchError((error) => {
+            this.store.dispatch(LoaderActions.hideLoader());
+            return of(WeatherActions.loadLocationsFailure({ error }));
+          })
         )
       )
     )
@@ -31,14 +38,19 @@ export class WeatherEffects {
   loadCurrentConditions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(WeatherActions.loadCurrentConditions),
+      tap(() => this.store.dispatch(LoaderActions.showLoader())),
       mergeMap(({ locationKey }) =>
         this.weatherService.getCurrentConditions(locationKey).pipe(
-          map((currentConditions) =>
-            WeatherActions.loadCurrentConditionsSuccess({ currentConditions })
-          ),
-          catchError((error) =>
-            of(WeatherActions.loadCurrentConditionsFailure({ error }))
-          )
+          map((currentConditions) => {
+            this.store.dispatch(LoaderActions.hideLoader());
+            return WeatherActions.loadCurrentConditionsSuccess({
+              currentConditions,
+            });
+          }),
+          catchError((error) => {
+            this.store.dispatch(LoaderActions.hideLoader());
+            return of(WeatherActions.loadCurrentConditionsFailure({ error }));
+          })
         )
       )
     )
@@ -47,14 +59,19 @@ export class WeatherEffects {
   loadFiveDayForecast$ = createEffect(() =>
     this.actions$.pipe(
       ofType(WeatherActions.loadFiveDayForecast),
+      tap(() => this.store.dispatch(LoaderActions.showLoader())),
       mergeMap(({ locationKey }) =>
         this.weatherService.getFiveDayForecast(locationKey).pipe(
-          map((fiveDayForecast) =>
-            WeatherActions.loadFiveDayForecastSuccess({ fiveDayForecast })
-          ),
-          catchError((error) =>
-            of(WeatherActions.loadFiveDayForecastFailure({ error }))
-          )
+          map((fiveDayForecast) => {
+            this.store.dispatch(LoaderActions.hideLoader());
+            return WeatherActions.loadFiveDayForecastSuccess({
+              fiveDayForecast,
+            });
+          }),
+          catchError((error) => {
+            this.store.dispatch(LoaderActions.hideLoader());
+            return of(WeatherActions.loadFiveDayForecastFailure({ error }));
+          })
         )
       )
     )

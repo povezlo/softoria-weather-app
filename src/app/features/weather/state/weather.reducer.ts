@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as WeatherActions from './weather.actions';
+import * as LoaderActions from './loader.actions';
 import { ILocation, ICurrentConditions, IFiveDayForecast } from '@core/models';
 
 export interface WeatherState {
@@ -7,7 +8,8 @@ export interface WeatherState {
   currentConditions: ICurrentConditions[] | null;
   fiveDayForecast: IFiveDayForecast | null;
   loading: boolean;
-  error: Error;
+  error: Error | null;
+  showLoader: boolean;
 }
 
 export const initialState: WeatherState = {
@@ -16,6 +18,7 @@ export const initialState: WeatherState = {
   fiveDayForecast: null,
   loading: false,
   error: null,
+  showLoader: false,
 };
 
 export const weatherReducer = createReducer(
@@ -64,5 +67,7 @@ export const weatherReducer = createReducer(
     ...state,
     error,
     loading: false,
-  }))
+  })),
+  on(LoaderActions.showLoader, (state) => ({ ...state, showLoader: true })),
+  on(LoaderActions.hideLoader, (state) => ({ ...state, showLoader: false }))
 );
