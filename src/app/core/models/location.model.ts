@@ -4,12 +4,11 @@ export interface ILocation {
   Type: string;
   Rank: number;
   LocalizedName: string;
-  Country: {
-    ID: string;
-    LocalizedName: string;
-  };
-  AdministrativeArea: {
-    ID: string;
-    LocalizedName: string;
-  };
+  Country: ILocalizedNameID;
+  AdministrativeArea: ILocalizedNameID;
+}
+
+export interface ILocalizedNameID {
+  ID: string;
+  LocalizedName: string;
 }

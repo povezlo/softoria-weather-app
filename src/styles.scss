@@ -8,7 +8,7 @@ $custom-typography: mat.define-typography-config(
 
 @include mat.typography-hierarchy($custom-typography);
 
-$light-primary: mat.define-palette(mat.$indigo-palette, 500);
+$light-primary: mat.define-palette(mat.$light-blue-palette, 50);
 $light-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
 $dark-primary: mat.define-palette(mat.$pink-palette);
@@ -26,16 +26,16 @@ $light-theme: mat.define-light-theme(
 
 @include mat.all-component-themes($light-theme);
 
-.dark-theme {
-  $dark-theme: mat.define-dark-theme(
-    (
-      color: (
-        primary: $dark-primary,
-        accent: $dark-accent,
-      ),
-    )
-  );
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+    ),
+  )
+);
 
+.dark-theme {
   @include mat.all-component-colors($dark-theme);
 }
 
@@ -94,5 +94,40 @@ footer {
     font-size: 1.5rem;
     height: 1.5rem;
     width: 1.5rem;
+  }
+}
+
+// Навигационное меню
+.navigation-menu {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .nav-link {
+    text-decoration: none;
+    color: inherit;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      color: mat.get-theme-color($light-theme, accent, 'hover');
+    }
+
+    &.active {
+      color: mat.get-theme-color($light-theme, primary, 800);
+    }
+  }
+
+  .dark-theme & {
+    .nav-link {
+      &:hover {
+        background-color: mat.get-color-from-palette($dark-theme, 'hover');
+      }
+
+      &.active {
+        color: mat.get-theme-color($light-theme, accent, 800);
+      }
+    }
   }
 }

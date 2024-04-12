@@ -7,7 +7,7 @@ export interface WeatherState {
   currentConditions: ICurrentConditions[] | null;
   fiveDayForecast: IFiveDayForecast | null;
   loading: boolean;
-  error: any;
+  error: Error;
 }
 
 export const initialState: WeatherState = {

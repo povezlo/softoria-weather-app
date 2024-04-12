@@ -11,7 +11,7 @@ export const loadLocationsSuccess = createAction(
 );
 export const loadLocationsFailure = createAction(
   '[Weather] Load Locations Failure',
-  props<{ error: any }>()
+  props<{ error: Error }>()
 );
 
 export const loadCurrentConditions = createAction(
@@ -24,7 +24,7 @@ export const loadCurrentConditionsSuccess = createAction(
 );
 export const loadCurrentConditionsFailure = createAction(
   '[Weather] Load Current Conditions Failure',
-  props<{ error: any }>()
+  props<{ error: Error }>()
 );
 
 export const loadFiveDayForecast = createAction(
@@ -37,5 +37,5 @@ export const loadFiveDayForecastSuccess = createAction(
 );
 export const loadFiveDayForecastFailure = createAction(
   '[Weather] Load Five Day Forecast Failure',
-  props<{ error: any }>()
+  props<{ error: Error }>()
 );

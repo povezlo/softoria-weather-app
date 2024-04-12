@@ -1,5 +1,5 @@
 export enum RoutePath {
-  HOME = 'home',
+  HOME = '',
   FAVORITES = 'favorites',
   ERROR = 'error',
 }

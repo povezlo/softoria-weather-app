@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
+import { WeatherService } from '@features/weather/services';
 
 @Component({
   selector: 'app-favorites',
@@ -8,4 +14,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './favorites.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FavoritesComponent {}
+export class FavoritesComponent implements OnInit {
+  private readonly ws = inject(WeatherService);
+
+  ngOnInit(): void {
+    this.ws.getFiveDayForecast('324505').subscribe((locations) => {
+      console.log(locations);
+    });
+  }
+}
