@@ -4,10 +4,15 @@
 
   <mat-nav-list>
     <mat-list-item role="listitem">
-      <a mat-button routerLink="/" routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a
+        mat-button
+        routerLink="/"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home</a
+      >
     </mat-list-item>
-    <mat-list-item  role="listitem">
+    <mat-list-item role="listitem">
       <a mat-button routerLink="/favorites">Favorites</a>
     </mat-list-item>
   </mat-nav-list>

@@ -1,18 +1,29 @@
 import { createSelector } from '@ngrx/store';
 import { AppState } from './weather.state';
-import { WeatherState } from './weather.reducer';
 
 export const selectWeatherState = (state: AppState) => state.weather;
 
-export const selectWeather = createSelector(
+export const selectLocations = createSelector(
   selectWeatherState,
-  (state: WeatherState) => state.weather
+  (state) => state.locations
 );
+
+export const selectCurrentConditions = createSelector(
+  selectWeatherState,
+  (state) => state.currentConditions
+);
+
+export const selectFiveDayForecast = createSelector(
+  selectWeatherState,
+  (state) => state.fiveDayForecast
+);
+
 export const selectLoading = createSelector(
   selectWeatherState,
-  (state: WeatherState) => state.loading
+  (state) => state.loading
 );
+
 export const selectError = createSelector(
   selectWeatherState,
-  (state: WeatherState) => state.error
+  (state) => state.error
 );
