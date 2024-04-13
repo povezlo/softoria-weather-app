@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './weather.state';
 import * as WeatherActions from './weather.actions';
+import * as LoaderActions from './loader.actions';
 import {
   selectLocations,
   selectCurrentConditions,
@@ -22,15 +23,23 @@ export class WeatherFacade {
 
   constructor(private store: Store<AppState>) {}
 
-  loadLocations(query: string) {
+  loadLocations(query: string): void {
     this.store.dispatch(WeatherActions.loadLocations({ query }));
   }
 
-  loadCurrentConditions(locationKey: string) {
+  loadCurrentConditions(locationKey: string): void {
     this.store.dispatch(WeatherActions.loadCurrentConditions({ locationKey }));
   }
 
-  loadFiveDayForecast(locationKey: string) {
+  loadFiveDayForecast(locationKey: string): void {
     this.store.dispatch(WeatherActions.loadFiveDayForecast({ locationKey }));
+  }
+
+  showLoader(): void {
+    this.store.dispatch(LoaderActions.showLoader());
+  }
+
+  hideLoader(): void {
+    this.store.dispatch(LoaderActions.hideLoader());
   }
 }

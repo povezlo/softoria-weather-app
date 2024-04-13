@@ -18,6 +18,7 @@ export class WeatherService {
 
   getLocations(query: string): Observable<ILocation[]> {
     const params = new HttpParams().set('q', query);
+
     return this.apiService.get<ILocation[]>(
       `locations/${VERSION}/cities/autocomplete`,
       params
@@ -29,6 +30,7 @@ export class WeatherService {
     details = false
   ): Observable<ICurrentConditions[]> {
     const params = new HttpParams().set('details', details);
+
     return this.apiService.get<ICurrentConditions[]>(
       `currentconditions/${VERSION}/${locationKey}`,
       params
@@ -42,8 +44,34 @@ export class WeatherService {
     const params = new HttpParams()
       .set('details', config.details)
       .set('metric', config.enableMetric);
+
     return this.apiService.get<IFiveDayForecast>(
       `forecasts/${VERSION}/daily/5day/${locationKey}`,
+      params
+    );
+  }
+
+  getLocationByCoords(
+    latitude: number,
+    longitude: number,
+    options?: { language?: string; details?: boolean; toplevel?: boolean }
+  ): Observable<Location> {
+    const params = new HttpParams().set('q', `${latitude},${longitude}`);
+
+    if (options && options.language) {
+      params.set('language', options.language);
+    }
+
+    if (options && options.details) {
+      params.set('details', options.details);
+    }
+
+    if (options && options.toplevel) {
+      params.set('toplevel', options.toplevel);
+    }
+
+    return this.apiService.get<Location>(
+      `/locations/${VERSION}/cities/geoposition/search`,
       params
     );
   }

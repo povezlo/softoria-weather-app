@@ -32,3 +32,8 @@ export const selectShowLoader = createSelector(
   selectWeatherState,
   (state) => state.showLoader
 );
+
+export const selectSelectedLocation = createSelector(
+  selectWeatherState,
+  (state) => state.selectedLocation
+);

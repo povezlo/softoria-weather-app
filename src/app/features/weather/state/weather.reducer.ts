@@ -10,6 +10,7 @@ export interface WeatherState {
   loading: boolean;
   error: Error | null;
   showLoader: boolean;
+  selectedLocation: Location | null;
 }
 
 export const initialState: WeatherState = {
@@ -19,6 +20,7 @@ export const initialState: WeatherState = {
   loading: false,
   error: null,
   showLoader: false,
+  selectedLocation: null,
 };
 
 export const weatherReducer = createReducer(
@@ -69,5 +71,13 @@ export const weatherReducer = createReducer(
     loading: false,
   })),
   on(LoaderActions.showLoader, (state) => ({ ...state, showLoader: true })),
-  on(LoaderActions.hideLoader, (state) => ({ ...state, showLoader: false }))
+  on(LoaderActions.hideLoader, (state) => ({ ...state, showLoader: false })),
+  on(WeatherActions.loadGeolocationSuccess, (state, { location }) => ({
+    ...state,
+    selectedLocation: location,
+  })),
+  on(WeatherActions.loadGeolocationFailure, (state, { error }) => ({
+    ...state,
+    error,
+  }))
 );
