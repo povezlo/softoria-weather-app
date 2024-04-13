@@ -10,6 +10,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+
 import { appRoutingProviders } from './app.routes';
 import { ApiKeyInterceptor, ErrorInterceptor } from '@core/interceptors';
 import { provideApiKey, provideBaseUrl } from '@core/providers';
@@ -31,5 +33,6 @@ export const appConfig: ApplicationConfig = {
       StoreModule.forRoot({ weather: weatherReducer }),
       EffectsModule.forRoot([WeatherEffects])
     ),
+    provideCharts(withDefaultRegisterables()),
   ],
 };

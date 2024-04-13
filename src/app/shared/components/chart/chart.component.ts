@@ -2,43 +2,40 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   Input,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import Chart, { ChartData, ChartOptions, ChartType } from 'chart.js/auto';
-import 'zone.js';
-import 'chartjs-adapter-moment';
+import { ChartConfiguration, ChartOptions, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-chart',
   standalone: true,
-  imports: [CommonModule],
-  template: ` <canvas #canvas></canvas> `,
+  imports: [BaseChartDirective],
+  templateUrl: './chart.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartComponent implements AfterViewInit {
-  @ViewChild('canvas') canvas!: ElementRef;
+  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
   @Input() type: ChartType = 'line';
-  @Input() data: ChartData<'line'> = {
+  @Input() chartData: ChartConfiguration<'line'>['data'] = {
     labels: [],
     datasets: [],
   };
-  @Input() options: ChartOptions = {};
-
-  chart!: Chart;
+  @Input() chartOptions: ChartOptions<'line'> = {
+    responsive: false,
+  };
 
   ngAfterViewInit() {
-    this.chart = new Chart(this.canvas.nativeElement, {
-      type: this.type,
-      data: this.data,
-      options: this.getChartOptions(),
-    });
+    this.initChartOptions();
   }
 
-  getChartOptions(): ChartOptions {
-    return {
+  public someAction(): void {
+    this.chart?.toBase64Image();
+  }
+
+  initChartOptions(): void {
+    this.chartOptions = {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {

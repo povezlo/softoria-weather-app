@@ -1,6 +1,8 @@
 <h2>DailyForecasts</h2>
 <ul *ngIf="fiveDayForecast$ | async as forecast">
   <li>
-    <app-forecast-chart [dailyForecasts]="forecast.DailyForecasts"></app-forecast-chart>
+    <app-forecast-chart
+      [dailyForecasts]="forecast.DailyForecasts"
+    ></app-forecast-chart>
   </li>
 </ul>

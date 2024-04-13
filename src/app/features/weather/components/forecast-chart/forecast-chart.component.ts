@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { IDailyForecast } from '@core/models';
 import { ChartComponent } from '@shared/components/chart/chart.component';
-import { ChartData, ChartOptions } from 'chart.js';
+import { ChartConfiguration, ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-forecast-chart',
@@ -20,11 +20,11 @@ import { ChartData, ChartOptions } from 'chart.js';
 export class ForecastChartComponent implements OnChanges {
   @Input() dailyForecasts: IDailyForecast[] = [];
 
-  @Input() data: ChartData<'line'> = {
+  @Input() chartData: ChartConfiguration<'line'>['data'] = {
     labels: [],
     datasets: [],
   };
-  options: ChartOptions = {
+  chartOptions: ChartOptions<'line'> = {
     responsive: true,
     maintainAspectRatio: false,
   };
@@ -46,7 +46,7 @@ export class ForecastChartComponent implements OnChanges {
       (forecast) => forecast.Temperature.Maximum.Value
     );
 
-    this.data = {
+    this.chartData = {
       labels,
       datasets: [
         {
