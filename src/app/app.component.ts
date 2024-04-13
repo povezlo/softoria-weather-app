@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -16,8 +16,4 @@ import { HeaderComponent, FooterComponent } from '@core/components';
   ],
   templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit {
-  ngOnInit() {
-    this.store.dispatch(WeatherActions.loadGeolocation());
-  }
-}
+export class AppComponent {}
