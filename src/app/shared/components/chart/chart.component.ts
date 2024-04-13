@@ -1,23 +1,25 @@
 import {
-  Component,
-  Input,
-  ViewChild,
   AfterViewInit,
   ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
 } from '@angular/core';
-import { ChartOptions, ChartData, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
+import { CommonModule } from '@angular/common';
+import Chart, { ChartData, ChartOptions, ChartType } from 'chart.js/auto';
+import 'zone.js';
+import 'chartjs-adapter-moment';
 
 @Component({
   selector: 'app-chart',
   standalone: true,
-  imports: [BaseChartDirective],
-  templateUrl: './chart.component.html',
-  styleUrl: './chart.component.scss',
+  imports: [CommonModule],
+  template: ` <canvas #canvas></canvas> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartComponent implements AfterViewInit {
-  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+  @ViewChild('canvas') canvas!: ElementRef;
   @Input() type: ChartType = 'line';
   @Input() data: ChartData<'line'> = {
     labels: [],
@@ -25,14 +27,18 @@ export class ChartComponent implements AfterViewInit {
   };
   @Input() options: ChartOptions = {};
 
-  ngAfterViewInit(): void {
-    this.initChartOptions();
+  chart!: Chart;
+
+  ngAfterViewInit() {
+    this.chart = new Chart(this.canvas.nativeElement, {
+      type: this.type,
+      data: this.data,
+      options: this.getChartOptions(),
+    });
   }
 
-  initChartOptions(): void {
-    // Здесь вы можете задать дополнительные настройки для графика
-    // Например, настройки для легенды, заголовка, осей и т.д.
-    this.options = {
+  getChartOptions(): ChartOptions {
+    return {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
