@@ -10,7 +10,7 @@ import { WeatherFacade } from '@features/weather/state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CurrentWeatherComponent {
-  weather$ = this.weatherFacade.weather$;
+  weather$ = this.weatherFacade.locations$;
   loading$ = this.weatherFacade.loading$;
   error$ = this.weatherFacade.error$;
 

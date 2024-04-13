@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AppState, selectShowLoader } from '@features/weather';
-import { Store } from '@ngrx/store';
+import { WeatherFacade } from '@features/weather';
 
 @Component({
   selector: 'app-loader',
@@ -13,7 +12,7 @@ import { Store } from '@ngrx/store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoaderComponent {
-  showLoader$ = this.store.select(selectShowLoader);
+  showLoader$ = this.weatherFacade.showLoader$;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private weatherFacade: WeatherFacade) {}
 }

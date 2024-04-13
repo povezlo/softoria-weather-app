@@ -1,25 +1,19 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  inject,
-} from '@angular/core';
-import { WeatherService } from '@features/weather/services';
+import { AsyncPipe, JsonPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { WeatherFacade } from '@features/weather';
 
 @Component({
   selector: 'app-favorites',
   standalone: true,
-  imports: [],
+  imports: [AsyncPipe, JsonPipe],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FavoritesComponent implements OnInit {
-  private readonly ws = inject(WeatherService);
+export class FavoritesComponent {
+  locations$ = this.weatherFacade.locations$;
 
-  ngOnInit(): void {
-    this.ws.getFiveDayForecast('324505').subscribe((locations) => {
-      console.log(locations);
-    });
+  constructor(private weatherFacade: WeatherFacade) {
+    weatherFacade.loadLocations('london');
   }
 }

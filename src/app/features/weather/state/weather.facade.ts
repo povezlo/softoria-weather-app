@@ -8,6 +8,7 @@ import {
   selectFiveDayForecast,
   selectLoading,
   selectError,
+  selectShowLoader,
 } from './weather.selectors';
 
 @Injectable({ providedIn: 'root' })
@@ -17,6 +18,7 @@ export class WeatherFacade {
   fiveDayForecast$ = this.store.select(selectFiveDayForecast);
   loading$ = this.store.select(selectLoading);
   error$ = this.store.select(selectError);
+  showLoader$ = this.store.select(selectShowLoader);
 
   constructor(private store: Store<AppState>) {}
 
