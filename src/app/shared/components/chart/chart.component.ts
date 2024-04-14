@@ -30,10 +30,6 @@ export class ChartComponent implements AfterViewInit {
     this.initChartOptions();
   }
 
-  public someAction(): void {
-    this.chart?.toBase64Image();
-  }
-
   initChartOptions(): void {
     this.chartOptions = {
       responsive: true,
