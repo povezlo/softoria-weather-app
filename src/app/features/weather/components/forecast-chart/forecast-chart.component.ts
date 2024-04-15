@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { BaseChartComponent } from '@shared/components';
 import { IDailyForecast } from '@core/models';
+import { ThemeService } from '@core/services';
 
 @Component({
   selector: 'app-forecast-chart',
@@ -13,6 +14,14 @@ import { IDailyForecast } from '@core/models';
 })
 export class ForecastChartComponent {
   @Input() dailyForecasts: IDailyForecast[] = [];
+
+  isDarkTheme = false;
+
+  constructor(private themeService: ThemeService) {
+    this.themeService.currentTheme.subscribe((isDark) => {
+      this.isDarkTheme = isDark;
+    });
+  }
 
   get config(): ChartConfiguration | undefined {
     if (!this.dailyForecasts) {
@@ -33,13 +42,13 @@ export class ForecastChartComponent {
         {
           label: 'Day',
           data: dayTemps,
-          borderColor: 'red',
+          borderColor: this.isDarkTheme ? 'red' : 'rgba(255, 0, 0, 0.5)',
           fill: false,
         },
         {
           label: 'Night',
           data: nightTemps,
-          borderColor: 'blue',
+          borderColor: this.isDarkTheme ? 'blue' : 'rgba(0, 0, 255, 0.5)',
           fill: false,
         },
       ],
