@@ -16,6 +16,8 @@ import { appRoutingProviders } from './app.routes';
 import { ApiKeyInterceptor, ErrorInterceptor } from '@core/interceptors';
 import { provideApiKey, provideBaseUrl } from '@core/providers';
 import { WeatherEffects, weatherReducer } from '@features/weather/state';
+import { favoritesReducer } from '@features/weather/state/favorites.reducer';
+import { FavoritesEffects } from '@features/weather/state/favorites.effects';
 import { environment } from '@env/environment';
 
 export const appConfig: ApplicationConfig = {
@@ -30,8 +32,11 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([ErrorInterceptor, ApiKeyInterceptor])
     ),
     importProvidersFrom(
-      StoreModule.forRoot({ weather: weatherReducer }),
-      EffectsModule.forRoot([WeatherEffects])
+      StoreModule.forRoot({
+        weather: weatherReducer,
+        favorites: favoritesReducer,
+      }),
+      EffectsModule.forRoot([WeatherEffects, FavoritesEffects])
     ),
     provideCharts(withDefaultRegisterables()),
   ],

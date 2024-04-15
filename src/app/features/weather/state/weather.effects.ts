@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { of } from 'rxjs';
-import { catchError, delay, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as WeatherActions from './weather.actions';
@@ -23,7 +23,6 @@ export class WeatherEffects {
     this.actions$.pipe(
       ofType(WeatherActions.loadLocations),
       tap(() => this.weatherFacade.showLoader()),
-      delay(8000),
       mergeMap(({ query }) =>
         this.weatherService.getLocations(query).pipe(
           map((locations) => {

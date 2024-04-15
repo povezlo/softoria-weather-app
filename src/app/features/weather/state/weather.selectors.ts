@@ -8,6 +8,11 @@ export const selectLocations = createSelector(
   (state) => state.locations
 );
 
+export const selectSelectedLocation = createSelector(
+  selectWeatherState,
+  (state) => state.selectedLocation
+);
+
 export const selectCurrentConditions = createSelector(
   selectWeatherState,
   (state) => state.currentConditions
@@ -31,9 +36,4 @@ export const selectError = createSelector(
 export const selectShowLoader = createSelector(
   selectWeatherState,
   (state) => state.showLoader
-);
-
-export const selectSelectedLocation = createSelector(
-  selectWeatherState,
-  (state) => state.selectedLocation
 );

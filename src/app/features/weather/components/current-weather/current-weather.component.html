@@ -1,1 +1,24 @@
-<p>current-weather works!</p>
+<section *ngIf="currentConditions$ | async as currentConditions">
+  @for (condition of currentConditions; track condition.EpochTime) {
+    <mat-card class="weather-card">
+      <mat-card-header>
+        <mat-card-title>Текущая погода</mat-card-title>
+        <mat-card-subtitle>{{ selectedLocation$ | async }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="weather-icon">
+          <mat-icon
+            [fontIcon]="getWeatherIcon(condition.WeatherIcon)"
+          ></mat-icon>
+        </div>
+        <div class="weather-text">
+          {{ condition.WeatherText }}
+        </div>
+        <div class="temperature">
+          {{ condition.Temperature.Metric.Value }}°C
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</section>

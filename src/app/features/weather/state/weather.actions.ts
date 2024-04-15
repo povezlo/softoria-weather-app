@@ -48,7 +48,7 @@ export const loadGeolocation = createAction('[Weather] Load Geolocation');
 
 export const loadGeolocationSuccess = createAction(
   '[Weather] Load Geolocation Success',
-  props<{ location: Location }>()
+  props<{ location: ILocation }>()
 );
 
 export const loadGeolocationFailure = createAction(

@@ -5,3 +5,7 @@ export * from './weather.facade';
 export * from './weather.effects';
 export * from './weather.actions';
 export * from './loader.actions';
+export * from './favorites.actions';
+export * from './favorites.selectors';
+export * from './favorites.facade';
+export * from './favorites.effects';

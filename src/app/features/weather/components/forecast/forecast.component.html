@@ -1,1 +1,31 @@
-<p>forecast works!</p>
+<button
+  mat-mini-fab
+  color="primary"
+  aria-label="Example icon button with a menu icon"
+  (click)="toggleView()"
+>
+  <mat-icon>menu</mat-icon>
+</button>
+
+@if (showChart) {
+  @for (
+    forecast of (fiveDayForecast$ | async)?.DailyForecasts;
+    track forecast.EpochDate
+  ) {
+    <mat-card class="forecast-tile">
+      <mat-card-title>{{ forecast.Date | date }}</mat-card-title>
+      <mat-card-subtitle>
+        {{ forecast.Temperature.Minimum.Value }}°C /
+        {{ forecast.Temperature.Maximum.Value }}°C
+      </mat-card-subtitle>
+      <mat-card-content>
+        <mat-icon>{{ getWeatherIcon(forecast.Day.Icon) }}</mat-icon>
+        {{ forecast.Day.IconPhrase }}
+      </mat-card-content>
+    </mat-card>
+  }
+} @else {
+  <app-forecast-chart
+    [dailyForecasts]="(fiveDayForecast$ | async)?.DailyForecasts || []"
+  ></app-forecast-chart>
+}

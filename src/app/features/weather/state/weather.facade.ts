@@ -10,6 +10,7 @@ import {
   selectLoading,
   selectError,
   selectShowLoader,
+  selectSelectedLocation,
 } from './weather.selectors';
 
 @Injectable({ providedIn: 'root' })
@@ -17,6 +18,7 @@ export class WeatherFacade {
   locations$ = this.store.select(selectLocations);
   currentConditions$ = this.store.select(selectCurrentConditions);
   fiveDayForecast$ = this.store.select(selectFiveDayForecast);
+  selectedLocation$ = this.store.select(selectSelectedLocation);
   loading$ = this.store.select(selectLoading);
   error$ = this.store.select(selectError);
   showLoader$ = this.store.select(selectShowLoader);

@@ -1,1 +1,20 @@
-<p>search works!</p>
+<form>
+  <mat-form-field>
+    <mat-label>Search</mat-label>
+    <input
+      type="text"
+      placeholder="Search..."
+      aria-label="search"
+      matInput
+      [formControl]="searchControl"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      @for (option of filteredOptions$ | async; track option.Key) {
+        <mat-option [value]="option.LocalizedName">{{
+          option.LocalizedName
+        }}</mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
