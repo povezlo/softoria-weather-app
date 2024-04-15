@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SearchComponent } from '@core/components';
-import { ForecastComponent } from '..';
+import { CurrentWeatherComponent, ForecastComponent } from '..';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [SearchComponent, ForecastComponent],
+  imports: [SearchComponent, ForecastComponent, CurrentWeatherComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,66 +1,60 @@
 import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   Input,
   ViewChild,
+  ElementRef,
+  OnChanges,
+  SimpleChanges,
+  OnDestroy,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
-import { ChartConfiguration, ChartOptions, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
+import { CommonModule } from '@angular/common';
+import { Chart, ChartConfiguration, registerables } from 'chart.js';
+import { isPlatformBrowser } from '@angular/common';
+
+Chart.register(...registerables);
 
 @Component({
-  selector: 'app-chart',
+  selector: 'app-base-chart',
   standalone: true,
-  imports: [BaseChartDirective],
-  templateUrl: './chart.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule],
+  template: '<canvas #canvas></canvas>',
+  styles: ['canvas { width: 100%; height: 100%; }'],
 })
-export class ChartComponent implements AfterViewInit {
-  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
-  @Input() type: ChartType = 'line';
-  @Input() chartData: ChartConfiguration<'line'>['data'] = {
-    labels: [],
-    datasets: [],
-  };
-  @Input() chartOptions: ChartOptions<'line'> = {
-    responsive: false,
-  };
+export class BaseChartComponent implements OnChanges, OnDestroy {
+  @Input() config: ChartConfiguration | undefined;
+  @ViewChild('canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>;
+  chart: Chart | undefined;
 
-  ngAfterViewInit() {
-    this.initChartOptions();
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.createChart();
+    }
   }
 
-  initChartOptions(): void {
-    this.chartOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'top',
-        },
-        title: {
-          display: true,
-          text: 'Пример графика',
-        },
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: '#333',
-          },
-        },
-        y: {
-          ticks: {
-            color: '#333',
-          },
-        },
-      },
-    };
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['config'] && this.chart && isPlatformBrowser(this.platformId)) {
+      this.chart.destroy();
+      this.createChart();
+    }
   }
 
-  updateChart(): void {
-    if (this.chart) {
-      this.chart.update();
+  createChart() {
+    if (!isPlatformBrowser(this.platformId) || !this.config) {
+      return;
+    }
+
+    if (this.canvas && this.canvas.nativeElement) {
+      this.chart = new Chart(this.canvas.nativeElement, this.config);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.chart && isPlatformBrowser(this.platformId)) {
+      this.chart.destroy();
     }
   }
 }

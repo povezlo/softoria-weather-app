@@ -1,67 +1,53 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChartConfiguration, ChartType } from 'chart.js';
+import { BaseChartComponent } from '@shared/components';
 import { IDailyForecast } from '@core/models';
-import { ChartComponent } from '@shared/components/chart/chart.component';
-import { ChartConfiguration, ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-forecast-chart',
   standalone: true,
-  imports: [ChartComponent],
+  imports: [CommonModule, BaseChartComponent],
   templateUrl: './forecast-chart.component.html',
-  styleUrl: './forecast-chart.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./forecast-chart.component.scss'],
 })
-export class ForecastChartComponent implements OnChanges {
+export class ForecastChartComponent {
   @Input() dailyForecasts: IDailyForecast[] = [];
 
-  @Input() chartData: ChartConfiguration<'line'>['data'] = {
-    labels: [],
-    datasets: [],
-  };
-  chartOptions: ChartOptions<'line'> = {
-    responsive: true,
-    maintainAspectRatio: false,
-  };
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['dailyForecasts']) {
-      this.updateChartData();
+  get config(): ChartConfiguration | undefined {
+    if (!this.dailyForecasts) {
+      return undefined;
     }
-  }
 
-  private updateChartData() {
-    const labels = this.dailyForecasts.map((forecast) =>
-      new Date(forecast.Date).toLocaleDateString()
+    const dayTemps = this.dailyForecasts.map(
+      (item) => item.Temperature.Maximum.Value
     );
-    const minTemps = this.dailyForecasts.map(
-      (forecast) => forecast.Temperature.Minimum.Value
+    const nightTemps = this.dailyForecasts.map(
+      (item) => item.Temperature.Minimum.Value
     );
-    const maxTemps = this.dailyForecasts.map(
-      (forecast) => forecast.Temperature.Maximum.Value
-    );
+    const dates = this.dailyForecasts.map((item) => item.Date);
 
-    this.chartData = {
-      labels,
+    const chartData = {
+      labels: dates,
       datasets: [
         {
-          label: 'Min Temp',
-          data: minTemps,
-          borderColor: 'blue',
-          backgroundColor: 'rgba(0, 0, 255, 0.2)',
+          label: 'Day',
+          data: dayTemps,
+          borderColor: 'red',
+          fill: false,
         },
         {
-          label: 'Max Temp',
-          data: maxTemps,
-          borderColor: 'red',
-          backgroundColor: 'rgba(255, 0, 0, 0.2)',
+          label: 'Night',
+          data: nightTemps,
+          borderColor: 'blue',
+          fill: false,
         },
       ],
+    };
+
+    return {
+      type: 'line' as ChartType,
+      data: chartData,
     };
   }
 }
